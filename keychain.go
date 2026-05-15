@@ -333,28 +333,19 @@ func (k *Item) SetAccount(a string) {
 	k.SetString(AccountKey, a)
 }
 
-// SetLabel sets the label attribute.
-// An empty string includes the key with an empty value (useful for
-// SecItemUpdate to clear the field). Use SetString(LabelKey, "") to
-// remove the key from the dictionary entirely.
+// SetLabel sets the label attribute
 func (k *Item) SetLabel(l string) {
-	k.attr[LabelKey] = l
+	k.SetString(LabelKey, l)
 }
 
-// SetDescription sets the description attribute.
-// An empty string includes the key with an empty value (useful for
-// SecItemUpdate to clear the field). Use SetString(DescriptionKey, "")
-// to remove the key from the dictionary entirely.
+// SetDescription sets the description attribute
 func (k *Item) SetDescription(s string) {
-	k.attr[DescriptionKey] = s
+	k.SetString(DescriptionKey, s)
 }
 
-// SetComment sets the comment attribute.
-// An empty string includes the key with an empty value (useful for
-// SecItemUpdate to clear the field). Use SetString(CommentKey, "") to
-// remove the key from the dictionary entirely.
+// SetComment sets the comment attribute
 func (k *Item) SetComment(s string) {
-	k.attr[CommentKey] = s
+	k.SetString(CommentKey, s)
 }
 
 // SetGeneric sets the generic attribute (kSecAttrGeneric)
