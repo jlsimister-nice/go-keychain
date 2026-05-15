@@ -348,6 +348,15 @@ func (k *Item) SetComment(s string) {
 	k.SetString(CommentKey, s)
 }
 
+// SetGeneric sets the generic attribute (kSecAttrGeneric)
+func (k *Item) SetGeneric(b []byte) {
+	if b != nil {
+		k.attr[GenericKey] = b
+	} else {
+		delete(k.attr, GenericKey)
+	}
+}
+
 // SetData sets the data attribute
 func (k *Item) SetData(b []byte) {
 	if b != nil {
