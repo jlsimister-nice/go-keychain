@@ -1,4 +1,4 @@
-module github.com/keybase/go-keychain
+module github.com/jlsimister-nice/go-keychain
 
 go 1.24.0
 
