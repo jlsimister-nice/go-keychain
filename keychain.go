@@ -188,6 +188,8 @@ var (
 	CreationDateKey = attrKey(C.CFTypeRef(C.kSecAttrCreationDate))
 	// ModificationDateKey is for kSecAttrModificationDate
 	ModificationDateKey = attrKey(C.CFTypeRef(C.kSecAttrModificationDate))
+	// GenericKey is for kSecAttrGeneric
+	GenericKey = attrKey(C.CFTypeRef(C.kSecAttrGeneric))
 )
 
 // Synchronizable is the items synchronizable status
@@ -470,6 +472,7 @@ type QueryResult struct {
 	Data             []byte
 	CreationDate     time.Time
 	ModificationDate time.Time
+	Generic          []byte
 }
 
 // QueryItemRef returns query result as CFTypeRef. You must release it when you are done.
@@ -582,6 +585,12 @@ func convertResult(d C.CFDictionaryRef) (*QueryResult, error) {
 			result.CreationDate = CFDateToTime(C.CFDateRef(v))
 		case ModificationDateKey:
 			result.ModificationDate = CFDateToTime(C.CFDateRef(v))
+		case GenericKey:
+			b, err := CFDataToBytes(C.CFDataRef(v))
+			if err != nil {
+				return nil, err
+			}
+			result.Generic = b
 			// default:
 			// fmt.Printf("Unhandled key in conversion: %v = %v\n", cfTypeValue(k), cfTypeValue(v))
 		}
