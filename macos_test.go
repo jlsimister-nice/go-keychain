@@ -48,10 +48,36 @@ func TestGenericPassword(t *testing.T) {
 	service, account, label, accessGroup, password := "TestGenericPasswordRef", "test", "", "", "toomanysecrets"
 
 	item := NewGenericPassword(service, account, label, []byte(password), accessGroup)
+	item.SetGeneric([]byte("generic data"))
 	defer func() { _ = DeleteItem(item) }()
 	err := AddItem(item)
 	if err != nil {
 		t.Fatal(err)
+	}
+
+	query := NewItem()
+	query.SetSecClass(SecClassGenericPassword)
+	query.SetService(service)
+	query.SetAccount(account)
+	query.SetLabel(label)
+	query.SetAccessGroup(accessGroup)
+	query.SetMatchLimit(MatchLimitAll)
+	query.SetReturnAttributes(true)
+	results, err := QueryItem(query)
+	if err != nil {
+		t.Fatalf("Query Error: %v", err)
+	}
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+
+	r := results[0]
+	if string(r.Data) != password {
+		t.Errorf("expected password %q but got %q", password, string(r.Data))
+	}
+	if string(r.Generic) != "generic data" {
+		t.Errorf("Generic data does not match: expected 'generic data' but got %q", string(r.Generic))
 	}
 
 	err = DeleteItem(item)
