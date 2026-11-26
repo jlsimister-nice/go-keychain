@@ -248,7 +248,7 @@ func Convert(ref C.CFTypeRef) (interface{}, error) {
 	if typeID == C.CFStringGetTypeID() {
 		return CFStringToString(C.CFStringRef(ref)), nil
 	} else if typeID == C.CFDictionaryGetTypeID() {
-		return ConvertCFDictionary(C.CFDictionaryRef(ref))
+		return ConvertCFDictionary(C.CFDictionaryRef(ref)), nil
 	} else if typeID == C.CFArrayGetTypeID() {
 		arr := CFArrayToArray(C.CFArrayRef(ref))
 		results := make([]interface{}, 0, len(arr))
@@ -267,7 +267,7 @@ func Convert(ref C.CFTypeRef) (interface{}, error) {
 		}
 		return b, nil
 	} else if typeID == C.CFNumberGetTypeID() {
-		return CFNumberToInterface(C.CFNumberRef(ref))
+		return CFNumberToInterface(C.CFNumberRef(ref)), nil
 	} else if typeID == C.CFBooleanGetTypeID() {
 		if C.CFBooleanGetValue(C.CFBooleanRef(ref)) != 0 {
 			return true, nil
