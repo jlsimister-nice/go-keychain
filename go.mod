@@ -1,13 +1,13 @@
 module github.com/jlsimister-nice/go-keychain
 
-go 1.24.0
+go 1.26.0
 
-toolchain go1.25.5
+toolchain go1.27.1
 
 require (
 	github.com/keybase/dbus v0.0.0-20220506165403-5aa21ea2c23a
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/crypto v0.46.0
+	golang.org/x/crypto v0.54.0
 )
 
 require (
